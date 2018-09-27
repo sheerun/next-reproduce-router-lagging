@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import App, { Container } from 'next/app'
 
 class MyApp extends App {
@@ -10,9 +10,12 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    console.log(ctx)
-
-    return { pageProps, asPath: router.asPath, asPathCtx: ctx.asPath }
+    return {
+      pageProps,
+      asPath: router.asPath,
+      asPathCtx: ctx.asPath,
+      asPathSingleton: process.browser ? Router.asPath : ''
+    }
   }
 
   render () {
@@ -23,6 +26,8 @@ class MyApp extends App {
         <div>App getInitialProps asPath: {this.props.asPath}</div>
         <div>App withRouter asPath: {this.props.router.asPath}</div>
         <div>App ctx asPath: {this.props.asPathCtx}</div>
+        <div>Singleton asPath in getInitialProps of App: {this.props.asPathSingleton}</div>
+        <div>Singleton asPath in App: {process.browser ? Router.asPath : ''}</div>
         <Component {...pageProps} />
       </Container>
     )
