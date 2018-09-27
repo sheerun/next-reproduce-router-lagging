@@ -10,7 +10,9 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    return { pageProps, asPath: router.asPath }
+    console.log(ctx)
+
+    return { pageProps, asPath: router.asPath, asPathCtx: ctx.asPath }
   }
 
   render () {
@@ -20,6 +22,7 @@ class MyApp extends App {
       <Container>
         <div>App getInitialProps asPath: {this.props.asPath}</div>
         <div>App withRouter asPath: {this.props.router.asPath}</div>
+        <div>App ctx asPath: {this.props.asPathCtx}</div>
         <Component {...pageProps} />
       </Container>
     )
